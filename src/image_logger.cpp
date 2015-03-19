@@ -28,6 +28,12 @@ bool ImageLogger::deinitialize() {
 }
 
 bool ImageLogger::cycle() {
+    if(imagePtr->format() != lms::imaging::Format::GREY) {
+        logger.error("cycle") << "Image is in format " << imagePtr->format()
+                              << " but expected " << lms::imaging::Format::GREY;
+        return false;
+    }
+
     bool result = lms::imaging::savePGM(*imagePtr,
                                         directory + "/image_" + std::to_string(imageCounter) + ".pgm");
 
