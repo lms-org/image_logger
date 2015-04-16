@@ -56,7 +56,7 @@ bool ImageLogger::cycle() {
         }
 
         result = lms::imaging::savePPM(*imagePtr,
-            directory + "/image_" + std::to_string(imageCounter) + ".pgm");
+            directory + "/image_" + std::to_string(imageCounter) + ".ppm");
     }
 
     if(! result) {
