@@ -2,11 +2,12 @@
 
 Saves all images from a data channel into a directory on your local hard drive.
 
-Currently only GREY images and only the PGM file format are supported.
+Currently only GREY/RGB images and only the PGM/PPM file formats are supported.
 
 ## Config
 - **image_channel** - Read images from this data channel.
 - **directory** - Write all images into this local folder.
+- **format** - Image file format, either pgm or ppm.
 
 ## Dependencies
 - [imaging](https://github.com/syxolk/imaging)

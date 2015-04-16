@@ -7,6 +7,7 @@ bool ImageLogger::initialize() {
 
     std::string imageChannel = config->get<std::string>("image_channel");
     directory = config->get<std::string>("directory");
+    format = config->get<std::string>("format");
     imageCounter = 0;
 
     if(directory.empty()) {
@@ -19,6 +20,14 @@ bool ImageLogger::initialize() {
         return false;
     }
 
+    if(format.empty()) {
+        logger.error("init") << "format was not specified";
+        return false;
+    } else if(format != "pgm" && format != "ppm") {
+        logger.error("init") << "format must be either pgm or ppm";
+        return false;
+    }
+
     imagePtr = datamanager()->readChannel<lms::imaging::Image>(this, imageChannel);
     return true;
 }
@@ -28,14 +37,27 @@ bool ImageLogger::deinitialize() {
 }
 
 bool ImageLogger::cycle() {
-    if(imagePtr->format() != lms::imaging::Format::GREY) {
-        logger.error("cycle") << "Image is in format " << imagePtr->format()
-                              << " but expected " << lms::imaging::Format::GREY;
-        return false;
-    }
+    bool result;
 
-    bool result = lms::imaging::savePGM(*imagePtr,
-                                        directory + "/image_" + std::to_string(imageCounter) + ".pgm");
+    if(format == "pgm") {
+        if(imagePtr->format() != lms::imaging::Format::GREY) {
+            logger.error("cycle") << "Image is in format " << imagePtr->format()
+                                  << " but expected " << lms::imaging::Format::GREY;
+            return false;
+        }
+
+        result = lms::imaging::savePGM(*imagePtr,
+            directory + "/image_" + std::to_string(imageCounter) + ".pgm");
+    } else if(format == "ppm") {
+        if(imagePtr->format() != lms::imaging::Format::RGB) {
+            logger.error("cycle") << "Image is in format " << imagePtr->format()
+                                  << " but expected " << lms::imaging::Format::RGB;
+            return false;
+        }
+
+        result = lms::imaging::savePPM(*imagePtr,
+            directory + "/image_" + std::to_string(imageCounter) + ".pgm");
+    }
 
     if(! result) {
         logger.warn("cycle") << "Could not write image";

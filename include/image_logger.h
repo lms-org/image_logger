@@ -16,6 +16,10 @@ private:
     const lms::imaging::Image *imagePtr;
 
     std::string directory;
+
+    // valid formats: pgm, ppm
+    std::string format;
+
     int imageCounter;
 };
 
