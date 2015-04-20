@@ -1,5 +1,4 @@
 image_channel = GREY_IMAGE
 directory = /tmp
-format = ppm
-filepattern = %04i.ppm
+filepattern = %04i
 create_subfolder_with_current_date = true

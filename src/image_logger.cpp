@@ -11,7 +11,6 @@ bool ImageLogger::initialize() {
 
     std::string imageChannel = config->get<std::string>("image_channel");
     directory = config->get<std::string>("directory");
-    format = config->get<std::string>("format");
     filepattern = config->get<std::string>("filepattern");
     bool createDateSubdirectory = config->get<bool>("create_subfolder_with_current_date");
     imageCounter = 0;
@@ -23,14 +22,6 @@ bool ImageLogger::initialize() {
 
     if(imageChannel.empty()) {
         logger.error("init") << "image_channel is empty";
-        return false;
-    }
-
-    if(format.empty()) {
-        logger.error("init") << "format was not specified";
-        return false;
-    } else if(format != "pgm" && format != "ppm") {
-        logger.error("init") << "format must be either pgm or ppm";
         return false;
     }
 
@@ -71,34 +62,34 @@ bool ImageLogger::deinitialize() {
 }
 
 bool ImageLogger::cycle() {
+    using lms::imaging::Format;
+
     bool result = false;
 
     char name[50];
     std::snprintf(name, sizeof(name), filepattern.c_str(), imageCounter);
     std::string fullPath = directory + "/" + name;
 
-    if(format == "pgm") {
-        if(imagePtr->format() != lms::imaging::Format::GREY) {
-            logger.error("cycle") << "Image is in format " << imagePtr->format()
-                                  << " but expected " << lms::imaging::Format::GREY;
-            return false;
-        }
-
-        result = lms::imaging::savePGM(*imagePtr, fullPath);
-    } else if(format == "ppm") {
-        if(imagePtr->format() != lms::imaging::Format::RGB) {
-            logger.error("cycle") << "Image is in format " << imagePtr->format()
-                                  << " but expected " << lms::imaging::Format::RGB;
-            return false;
-        }
-
-        result = lms::imaging::savePPM(*imagePtr, fullPath);
+    switch(imagePtr->format()) {
+    case Format::GREY:
+        result = lms::imaging::savePGM(*imagePtr, fullPath + ".pgm");
+        break;
+    case Format::RGB:
+        result = lms::imaging::savePPM(*imagePtr, fullPath + ".ppm");
+        break;
+    default:
+        logger.error("cycle")
+            << "Image format is neither GREY nor RGB, but "
+            << imagePtr->format();
+        return false;
     }
 
     if(! result) {
         logger.warn("cycle") << "Could not write image";
+        return false;
     }
 
     imageCounter++;
+
     return true;
 }
