@@ -9,7 +9,6 @@
 bool ImageLogger::initialize() {
     config = getConfig();
 
-    std::string imageChannel = config->get<std::string>("image_channel");
     directory = config->get<std::string>("directory");
     filepattern = config->get<std::string>("filepattern");
     bool createDateSubdirectory = config->get<bool>("create_subfolder_with_current_date");
@@ -17,11 +16,6 @@ bool ImageLogger::initialize() {
 
     if(directory.empty()) {
         logger.error("init") << "directory is empty";
-        return false;
-    }
-
-    if(imageChannel.empty()) {
-        logger.error("init") << "image_channel is empty";
         return false;
     }
 
@@ -53,7 +47,7 @@ bool ImageLogger::initialize() {
 
     logger.debug("init") << "Log images to " << directory;
 
-    imagePtr = datamanager()->readChannel<lms::imaging::Image>(this, imageChannel);
+    imagePtr = datamanager()->readChannel<lms::imaging::Image>(this, "IMAGE");
     return true;
 }
 

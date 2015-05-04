@@ -7,6 +7,9 @@ Saves all images from a data channel into a directory on your local hard drive.
 - If the image format is RGB then *.ppm files will be saved.
 - All other image formats issue an error. Use image_converter to convert the image to either GREY or RGB.
 
+## DataChannels
+- **IMAGE** - Image to write into a file
+
 ## Config
 - **image_channel** - Read images from this data channel.
 - **directory** - Write all images into this local folder.
