@@ -81,6 +81,8 @@ bool ImageLogger::cycle() {
     if(! result) {
         logger.warn("cycle") << "Could not write image";
         return false;
+    }else{
+        logger.debug("cycle") << "Wrote image: " << fullPath;
     }
 
     imageCounter++;
