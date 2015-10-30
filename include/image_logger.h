@@ -11,7 +11,7 @@ public:
     bool deinitialize() override;
     bool cycle() override;
 private:
-    const lms::type::ModuleConfig *config;
+    const lms::ModuleConfig *config;
 
     const lms::imaging::Image *imagePtr;
 
