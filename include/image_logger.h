@@ -13,7 +13,7 @@ public:
 private:
     const lms::ModuleConfig *config;
 
-    const lms::imaging::Image *imagePtr;
+    lms::ReadDataChannel<lms::imaging::Image> imagePtr;
 
     std::string directory;
 
