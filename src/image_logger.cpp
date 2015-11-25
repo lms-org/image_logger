@@ -7,11 +7,9 @@
 #include "lms/imaging/pnm.h"
 
 bool ImageLogger::initialize() {
-    config = getConfig();
-
-    directory = config->get<std::string>("directory");
-    filepattern = config->get<std::string>("filepattern");
-    bool createDateSubdirectory = config->get<bool>("create_subfolder_with_current_date");
+    directory = config().get<std::string>("directory");
+    filepattern = config().get<std::string>("filepattern");
+    bool createDateSubdirectory = config().get<bool>("create_subfolder_with_current_date");
     imageCounter = 0;
 
     if(directory.empty()) {
@@ -47,7 +45,7 @@ bool ImageLogger::initialize() {
 
     logger.debug("init") << "Log images to " << directory;
 
-    imagePtr = datamanager()->readChannel<lms::imaging::Image>(this, "IMAGE");
+    imagePtr = readChannel<lms::imaging::Image>("IMAGE");
     return true;
 }
 
