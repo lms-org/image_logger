@@ -3,7 +3,6 @@
 #include <sys/types.h>
 
 #include "image_logger.h"
-#include "lms/datamanager.h"
 #include "lms/imaging/pnm.h"
 
 bool ImageLogger::initialize() {
