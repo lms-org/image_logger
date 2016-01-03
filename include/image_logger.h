@@ -2,7 +2,6 @@
 #define IMAGE_LOGGER_H
 
 #include "lms/module.h"
-#include "lms/type/module_config.h"
 #include "lms/imaging/image.h"
 
 class ImageLogger : public lms::Module {
@@ -15,16 +14,11 @@ private:
 
     std::string directory;
 
-    // valid formats: pgm, ppm
-    std::string format;
-
     /**
      * @brief Format string that is used together with snprintf
      * to produce the file names.
      */
     std::string filepattern;
-
-    int imageCounter;
 };
 
 #endif /* IMAGE_LOGGER_H */

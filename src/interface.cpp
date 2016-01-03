@@ -1,7 +1,3 @@
 #include <image_logger.h>
 
-extern "C" {
-void* getInstance () {
-    return new ImageLogger();
-}
-}
+LMS_MODULE_INTERFACE(ImageLogger)

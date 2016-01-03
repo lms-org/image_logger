@@ -1,3 +1,0 @@
-directory = /tmp
-filepattern = %04i
-create_subfolder_with_current_date = true

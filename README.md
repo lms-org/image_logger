@@ -11,9 +11,7 @@ Saves all images from a data channel into a directory on your local hard drive.
 - **IMAGE** - Image to write into a file
 
 ## Config
-- **directory** - Write all images into this local folder.
-- **filepattern** - Pattern to be used for file names. You can use all options of [printf](http://www.cplusplus.com/reference/cstdio/printf/) here. The images are enumerated in ascending order.
-- **create_subfolder_with_current_date** - If set to true then image_logger will automatically create a subfolder inside **directory**. This subfolder contains the current date in the format "YYYYMMDD-HHMMSS". All images will be saved in this subfolder.
+- **filepattern** - Pattern to be used for file names. You can use all options of [printf](http://www.cplusplus.com/reference/cstdio/printf/) here. The images are enumerated in ascending order. Defaults to "%04i".
 
 ## Dependencies
 - [imaging](https://github.com/syxolk/imaging)
