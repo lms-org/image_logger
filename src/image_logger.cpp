@@ -2,7 +2,12 @@
 #include "lms/imaging/pnm.h"
 
 bool ImageLogger::initialize() {
-    directory = logDir("images");
+    if(! isEnableSave()) {
+        logger.error() << "Command line option --enable-save was not specified";
+        return false;
+    }
+
+    directory = saveLogDir("images");
     filepattern = config().get<std::string>("filepattern", "%04i");
 
     if(filepattern.empty()) {
